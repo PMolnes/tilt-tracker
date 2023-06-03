@@ -8,7 +8,7 @@ export default defineNuxtConfig({
     },
   },
   runtimeConfig: {
-    apiKey: "redacted",
+    apiKey: process.env.RIOT_API_KEY,
     riotApiBaseUrl: "https://euw1.api.riotgames.com/lol",
   },
 });
