@@ -1,4 +1,4 @@
-import { Participant } from "./Participant";
+import { CurrentGameParticipant } from "./CurrentGameParticipant";
 
 export interface CurrentGameInfo {
   gameId: number;
@@ -6,7 +6,7 @@ export interface CurrentGameInfo {
   gameMode: string;
   gameType: string;
   gameQueueConfigId: number;
-  participants: Participant[];
+  participants: CurrentGameParticipant[];
   observers: {
     encryptionKey: string;
   };
