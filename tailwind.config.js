@@ -9,7 +9,14 @@ module.exports = {
     "./app.vue",
   ],
   theme: {
-    extend: {},
+    extend: {
+      width: {
+        default: "min(100vw, 72rem)",
+      },
+      fontSize: {
+        dynamic: "clamp(2.25rem, 12vw, 8rem)",
+      },
+    },
   },
   plugins: [],
 };
