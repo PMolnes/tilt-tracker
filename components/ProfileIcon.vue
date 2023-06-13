@@ -16,7 +16,7 @@ const profileIconUrl = computed(() => {
 
 <template>
   <div class="flex flex-col items-center">
-    <img
+    <nuxt-img
       class="aspect-square h-32 flex-shrink-0 rounded"
       :class="loading ? 'bg-gray-200' : 'bg-white border border-white'"
       :src="profileIconUrl"

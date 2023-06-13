@@ -1,5 +1,6 @@
 // https://nuxt.com/docs/api/configuration/nuxt-config
 export default defineNuxtConfig({
+  modules: ["@nuxt/image"],
   css: ["~/assets/css/main.css"],
   postcss: {
     plugins: {
@@ -17,5 +18,9 @@ export default defineNuxtConfig({
         defineModel: true,
       },
     },
+  },
+  image: {
+    inject: true,
+    domains: ["https://ddragon.leagueoflegends.com"],
   },
 });
