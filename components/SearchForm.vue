@@ -4,8 +4,8 @@ import RegionSelector from "~/components/RegionSelector.vue";
 const searchValue = ref("");
 const selectedRegion = ref("EUW");
 
-const handleSubmit = () => {
-  navigateTo(`/${selectedRegion.value}/${searchValue.value}`);
+const handleSubmit = async () => {
+  await navigateTo(`/${selectedRegion.value}/${searchValue.value}`);
 };
 </script>
 
