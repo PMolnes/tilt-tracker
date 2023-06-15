@@ -1,6 +1,7 @@
 import axiosInstance from "./riotAxiosInstance";
 import { SummonerInfo } from "../../models/SummonerInfo";
 import { CurrentGameInfo } from "../../models/match/CurrentGameInfo";
+import { CurrentGameParticipant } from "../../models/match/CurrentGameParticipant";
 
 const getSummonerInfo = async (summonerName: string): Promise<SummonerInfo> => {
   return await axiosInstance
@@ -15,9 +16,7 @@ const getSummonerInfo = async (summonerName: string): Promise<SummonerInfo> => {
     });
 };
 
-const getCurrentMatch = async (
-  summonerId: string
-): Promise<CurrentGameInfo> => {
+const getCurrentMatch = async (summonerId: string): Promise<CurrentGameInfo> => {
   return await axiosInstance
     .get(`/spectator/v4/active-games/by-summoner/${summonerId}`)
     .then((response) => {
@@ -30,21 +29,15 @@ const getCurrentMatch = async (
     });
 };
 
-const getMatchIds = async (
-  puuid: string,
-  maxAmountOfMatches: number = 10
-): Promise<string[]> => {
+const getMatchIds = async (puuid: string, maxAmountOfMatches: number = 10): Promise<string[]> => {
   return await axiosInstance
-    .get(
-      `https://europe.api.riotgames.com/lol/match/v5/matches/by-puuid/${puuid}/ids`,
-      {
-        params: {
-          start: 0,
-          count: maxAmountOfMatches,
-          type: "ranked",
-        },
-      }
-    )
+    .get(`https://europe.api.riotgames.com/lol/match/v5/matches/by-puuid/${puuid}/ids`, {
+      params: {
+        start: 0,
+        count: maxAmountOfMatches,
+        type: "ranked",
+      },
+    })
     .then((response) => {
       if (response.status === 200) {
         return response.data;
@@ -55,17 +48,12 @@ const getMatchIds = async (
     });
 };
 
-const getMatchInfo = async (
-  matchId: string,
-  summonerName: string
-): Promise<Participant> => {
+const getMatchInfo = async (matchId: string, summonerName: string): Promise<Participant> => {
   return await axiosInstance
     .get(`https://europe.api.riotgames.com/lol/match/v5/matches/${matchId}`)
     .then((response) => {
       if (response.status === 200) {
-        return response.data.info.participants.find(
-          (p: Participant) => p.summonerName === summonerName
-        );
+        return response.data.info.participants.find((p: Participant) => p.summonerName === summonerName);
       }
     })
     .catch((error) => {
@@ -97,10 +85,19 @@ const getMostTiltedPlayer = async (currentGame: CurrentGameInfo) => {
   // get match infos
 };
 
+const getSummonerInfoForParticipants = async (currentGameParticipants: CurrentGameParticipant[]) => {
+  const participantsInformation: SummonerInfo[] = await Promise.all(
+    currentGameParticipants.map((participant) => getSummonerInfo(participant.summonerName))
+  );
+
+  return participantsInformation;
+};
+
 export {
   getSummonerInfo,
   getCurrentMatch,
   getMostTiltedPlayer,
   getMatchIds,
   getMatchInfo,
+  getSummonerInfoForParticipants,
 };
