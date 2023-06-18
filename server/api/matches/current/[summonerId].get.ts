@@ -1,5 +1,4 @@
 import axios from "axios";
-import { getCurrentMatch } from "../../../service/riotApi";
 
 export default defineEventHandler(async (event) => {
   const summonerId = event.context.params?.summonerId;
@@ -16,16 +15,23 @@ export default defineEventHandler(async (event) => {
 
   try {
     const currentGameInfo = await getCurrentMatch(summonerId!);
-    return currentGameInfo;
+
+    // Get SummonerInfo for all participants
+    const participantsInformation = await getSummonerInfoForParticipants(currentGameInfo.participants);
+
+    // Get matchIds for all participants
+    const participantMatchIds = await getParticipantsMatchIds(participantsInformation);
+
+    //TODO: Get match info for all matches
+
+    return participantMatchIds;
   } catch (error) {
     const isAxiosError = axios.isAxiosError(error);
     sendError(
       event,
       createError({
         statusCode: isAxiosError ? error.response?.status : 500,
-        statusMessage: isAxiosError
-          ? error.response?.statusText
-          : "Internal Server Error - Riot API",
+        statusMessage: isAxiosError ? error.response?.statusText : "Internal Server Error - Riot API",
       })
     );
   }

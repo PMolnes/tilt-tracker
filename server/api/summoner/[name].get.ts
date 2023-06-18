@@ -1,5 +1,4 @@
 import axios from "axios";
-import { getSummonerInfo } from "../../service/riotApi";
 
 export default defineEventHandler(async (event) => {
   const summonerName = event.context.params?.name;
@@ -24,9 +23,7 @@ export default defineEventHandler(async (event) => {
       event,
       createError({
         statusCode: isAxiosError ? error.response?.status : 500,
-        statusMessage: isAxiosError
-          ? error.response?.statusText
-          : "Internal Server Error - Riot Api",
+        statusMessage: isAxiosError ? error.response?.statusText : "Internal Server Error - Riot Api",
       })
     );
   }

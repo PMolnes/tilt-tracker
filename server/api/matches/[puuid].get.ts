@@ -1,14 +1,10 @@
 import axios from "axios";
-import { getMatchIds } from "../../service/riotApi";
 
 export default defineEventHandler(async (event) => {
   const puuid = event.context.params?.puuid;
 
   if (!puuid) {
-    sendError(
-      event,
-      createError({ statusCode: 400, statusMessage: "Invalid params." })
-    );
+    sendError(event, createError({ statusCode: 400, statusMessage: "Invalid params." }));
   }
 
   try {
@@ -16,14 +12,11 @@ export default defineEventHandler(async (event) => {
     return matchIds;
   } catch (error) {
     const isAxiosError = axios.isAxiosError(error);
-    console.log(error);
     sendError(
       event,
       createError({
         statusCode: isAxiosError ? error.response?.status : 500,
-        statusMessage: isAxiosError
-          ? error.response?.statusText
-          : "Internal Server Error - Riot Api",
+        statusMessage: isAxiosError ? error.response?.statusText : "Internal Server Error - Riot Api",
       })
     );
   }
