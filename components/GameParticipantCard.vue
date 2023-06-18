@@ -1,6 +1,6 @@
 <script setup lang="ts">
 interface GameParticipantCardProps {
-  teamColor: "red" | "blue";
+  teamColor?: "red" | "blue";
   // championName: string;
   bestPlayer?: boolean;
   mostTilted?: boolean;
@@ -27,14 +27,14 @@ const props = withDefaults(defineProps<GameParticipantCardProps>(), {
 
 <template>
   <div
-    class="w-card drop-shadow border-2 rounded min-h-fit h-32 p-2 bg-cover bg-center bg-[url('~/assets/champion/centered/Aatrox_0.jpg')] bg-blend-overlay bg-black/60"
+    class="w-full drop-shadow border-2 rounded min-h-fit h-32 p-2 bg-cover bg-center bg-[url('~/assets/champion/centered/Aatrox_0.jpg')] bg-blend-overlay bg-black/60"
     :class="[borderColor, bestPlayerStyle, mostTiltedStyle]"
   >
-    <div class="flex flex-col gap-2">
-      <h1 class="text-gray-400 text-sm">Fragment</h1>
-      <div class="flex items-center gap-10">
-        <IconFlame />
-        <UILabel> Winning </UILabel>
+    <h1 class="text-gray-400 block text-sm">Fragment</h1>
+    <div class="flex items-center">
+      <div class="flex flex-col items-center">
+        <h2 class="font-bold text-sm">Recent W%</h2>
+        <span class="text-lg">50%</span>
       </div>
     </div>
   </div>

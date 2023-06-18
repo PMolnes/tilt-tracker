@@ -12,6 +12,7 @@ module.exports = {
     extend: {
       width: {
         default: "min(100vw, 72rem)",
+        cards: "min(90vw, 72rem)",
       },
       fontSize: {
         dynamic: "clamp(2.25rem, 12vw, 8rem)",
