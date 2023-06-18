@@ -8,15 +8,17 @@ const {
   data: summonerInfo,
   error: summonerInfoError,
   pending: summonerInfoPending,
-} = useLazyFetch(`/api/summoner/${summonerName.value}`);
+} = await useLazyFetch(`/api/summoner/${summonerName.value}`);
 
-const { data: currentGameInfo, error: currentGameError } = useLazyFetch(
-  `/api/matches/current/${summonerInfo.value?.id}`
-);
+const {
+  data: currentGameInfo,
+  error: currentGameError,
+  pending: currentGameInfoLoading,
+} = useLazyFetch(`/api/matches/current/${summonerInfo.value?.id}`);
 </script>
 
 <template>
-  <div class="bg-slate-900 text-white h-screen">
+  <div class="bg-slate-900 text-white h-full">
     <Header />
     <main>
       <div v-if="summonerInfoError" class="flex justify-center text-xl mt-32">
@@ -25,11 +27,25 @@ const { data: currentGameInfo, error: currentGameError } = useLazyFetch(
         </h1>
       </div>
       <div v-else class="bg-blue-500 py-4">
-        <SummonerInfo
-          :loading="summonerInfoPending"
-          :summoner-info="summonerInfo"
-        />
+        <SummonerInfo :loading="summonerInfoPending" :summoner-info="summonerInfo" />
+      </div>
+      <div class="flex md:flex-row flex-col justify-center items-center gap-6 py-12">
+        <div class="flex flex-col gap-2">
+          <GameParticipantCard :best-player="true" team-color="blue" />
+          <GameParticipantCard team-color="blue" />
+          <GameParticipantCard team-color="blue" />
+          <GameParticipantCard team-color="blue" />
+          <GameParticipantCard team-color="blue" />
+        </div>
+        <div class="flex flex-col gap-2">
+          <GameParticipantCard />
+          <GameParticipantCard />
+          <GameParticipantCard />
+          <GameParticipantCard :most-tilted="true" />
+          <GameParticipantCard />
+        </div>
       </div>
     </main>
+    <Footer />
   </div>
 </template>
