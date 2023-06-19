@@ -24,6 +24,9 @@ export default defineEventHandler(async (event) => {
 
     //TODO: Get match info for all matches
 
+    const matchResultForParticipant = await getMatchResultsForParticipant(participantMatchIds[0]);
+    return matchResultForParticipant;
+
     return participantMatchIds;
   } catch (error) {
     const isAxiosError = axios.isAxiosError(error);

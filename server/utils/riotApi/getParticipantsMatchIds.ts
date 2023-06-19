@@ -1,13 +1,11 @@
 import { SummonerInfo } from "../../../models/SummonerInfo";
 
-export const getParticipantsMatchIds = async (
-  summonerInfos: SummonerInfo[]
-): Promise<
-  {
-    summonerName: string;
-    matchIds: string[];
-  }[]
-> => {
+export interface ParticipantMatchIds {
+  summonerName: string;
+  matchIds: string[];
+}
+
+export const getParticipantsMatchIds = async (summonerInfos: SummonerInfo[]): Promise<ParticipantMatchIds[]> => {
   return await Promise.all(
     summonerInfos.map(async (summoner) => {
       return {
